@@ -1,0 +1,4 @@
+node_modules/
+# Mac fonts are fetched from @sakun/system.css by install.sh (not ours to redistribute)
+assets/fonts/
+*.log

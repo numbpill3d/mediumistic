@@ -1,0 +1,17 @@
+{
+  "name": "mediumistic",
+  "version": "1.0.0",
+  "description": "A 1-bit classic-Macintosh multi-account manager for Medium, with dithered three.js readings.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron43 --no-sandbox --ozone-platform-hint=auto ."
+  },
+  "dependencies": {
+    "@sakun/system.css": "^0.1.11",
+    "three": "^0.186.1"
+  },
+  "productName": "Mediumistic",
+  "desktopName": "mediumistic.desktop",
+  "author": "scorn",
+  "license": "MIT"
+}

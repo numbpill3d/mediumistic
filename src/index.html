@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self'">
+  <title>Mediumistic</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ============ menu bar ============ -->
+  <header id="menubar">
+    <nav id="menus"></nav>
+    <div id="menubar-right">
+      <span id="moon" title="Moon phase"></span>
+      <span id="clock"></span>
+    </div>
+  </header>
+
+  <!-- ============ main window ============ -->
+  <section id="window" class="mac-window">
+    <div class="titlebar" data-drag>
+      <button class="box close-box" id="btn-close" title="Close"></button>
+      <div class="title"><span id="win-title">Mediumistic</span></div>
+      <button class="box zoom-box" id="btn-zoom" title="Zoom"></button>
+    </div>
+
+    <div id="body">
+      <aside id="sidebar">
+        <div class="side-head">
+          <span>Coven</span>
+          <span id="coven-count" class="dim"></span>
+        </div>
+        <ul id="profiles" role="listbox"></ul>
+        <div class="side-foot">
+          <button class="btn" id="btn-new">New…</button>
+          <button class="btn" id="btn-grimoire">Grimoire</button>
+        </div>
+      </aside>
+
+      <main id="main">
+        <div id="tabs">
+          <button class="tab active" data-view="dash">Dashboard</button>
+          <button class="tab" data-view="browser">Browser</button>
+          <div class="tab-fill"></div>
+          <span id="profile-badge" class="dim"></span>
+        </div>
+
+        <!-- dashboard -->
+        <div id="dash" class="view active">
+          <div class="panel orrery-panel">
+            <div class="panel-head"><span>The Orrery</span><span class="dim">orb = profile · size = posts · speed = cadence</span></div>
+            <div class="canvas-wrap"><canvas id="orrery"></canvas></div>
+          </div>
+          <div class="panel loom-panel">
+            <div class="panel-head"><span>The Loom</span><span class="dim" id="loom-caption">12 weeks of publishing</span></div>
+            <div class="canvas-wrap"><canvas id="loom"></canvas></div>
+          </div>
+          <div class="panel stats-panel">
+            <div class="panel-head"><span id="stats-title">Readings</span><span class="dim" id="stats-fresh"></span></div>
+            <div id="stats"></div>
+          </div>
+          <div class="panel posts-panel">
+            <div class="panel-head"><span>Recent Scrolls</span><span class="dim">from public feed</span></div>
+            <ol id="posts"></ol>
+          </div>
+        </div>
+
+        <!-- browser -->
+        <div id="browser" class="view">
+          <div id="toolbar">
+            <button class="btn sq" id="nav-back" title="Back (⌘[)">◀</button>
+            <button class="btn sq" id="nav-fwd" title="Forward (⌘])">▶</button>
+            <button class="btn sq" id="nav-reload" title="Reload (⌘R)">↻</button>
+            <button class="btn sq" id="nav-home" title="Home (⌘G)">⌂</button>
+            <input id="address" spellcheck="false" autocomplete="off">
+            <button class="btn" id="nav-write">Write</button>
+            <button class="btn" id="nav-stats">Stats</button>
+          </div>
+          <div id="webviews">
+            <div id="no-profile" class="empty">
+              <div class="empty-sigil">✶</div>
+              <p>No profile summoned.</p>
+              <p class="dim">File ▸ New Profile… (⌘N)</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <footer id="statusbar">
+      <span id="status">Ready.</span>
+      <span id="status-right" class="dim"></span>
+    </footer>
+  </section>
+
+  <!-- ============ Grimoire desk accessory ============ -->
+  <section id="grimoire" class="mac-window da hidden">
+    <div class="titlebar" data-da-drag>
+      <button class="box close-box" id="grimoire-close" title="Close"></button>
+      <div class="title"><span id="grimoire-title">Grimoire</span></div>
+    </div>
+    <textarea id="grimoire-text" spellcheck="true" placeholder="Draft ideas, titles, incantations…"></textarea>
+    <div class="da-foot dim" id="grimoire-foot"></div>
+  </section>
+
+  <!-- ============ modal layer ============ -->
+  <div id="modal-layer" class="hidden"></div>
+
+  <!-- ============ splash ============ -->
+  <div id="splash">
+    <div class="splash-box">
+      <canvas id="splash-sigil" width="96" height="96"></canvas>
+      <div class="splash-title">Welcome to Mediumistic</div>
+      <div class="splash-sub dim">a séance for your many selves</div>
+      <div class="progress"><div id="splash-bar"></div></div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Name=Mediumistic
+GenericName=Medium Account Manager
+Comment=Manage all your Medium accounts in one 1-bit Macintosh window
+Exec=/usr/bin/electron43 --no-sandbox --ozone-platform-hint=auto /home/scorn/mediumistic
+Icon=mediumistic
+Terminal=false
+Categories=Network;
+StartupWMClass=mediumistic
+StartupNotify=true
+Keywords=medium;writing;blog;accounts;profiles;
