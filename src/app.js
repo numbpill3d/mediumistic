@@ -1,5 +1,6 @@
 // Mediumistic — renderer. Menus, profiles, per-account webviews, dashboard.
 import { Orrery, Loom, drawSigil } from './viz.js';
+import { normalizeProfileRef, profileLabel, profileURL } from './profile.mjs';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -24,7 +25,7 @@ const START_PAGES = {
   write: ['New story', () => 'https://medium.com/new-story'],
   stats: ['Stats', () => 'https://medium.com/me/stats'],
   stories: ['Your stories', () => 'https://medium.com/me/stories/drafts'],
-  profile: ['Public profile', (p) => (p.handle ? `https://medium.com/@${p.handle.replace(/^@/, '')}` : 'https://medium.com/')],
+  profile: ['Public profile', (p) => (p.handle ? profileURL(p.handle) : 'https://medium.com/')],
   notifications: ['Notifications', () => 'https://medium.com/me/notifications'],
 };
 const MONO_CSS = 'html { filter: grayscale(1) contrast(1.12) !important; }';
@@ -146,7 +147,7 @@ async function profileDialog(existing) {
   });
   if (!ok) return null;
   p.name = name.value.trim() || p.handle.replace(/^@/, '') || 'Unnamed';
-  p.handle = handle.value.trim().replace(/^https?:\/\/medium\.com\/@/i, '').replace(/^@/, '').replace(/\/$/, '');
+  p.handle = normalizeProfileRef(handle.value);
   p.start = start.value;
   return p;
 }
@@ -403,7 +404,7 @@ function renderDash() {
   } else if (!res) {
     stats.replaceChildren(el('p', { class: 'note', text: 'Divining…' }));
   } else if (!res.ok) {
-    stats.replaceChildren(el('p', { class: 'note', text: `Could not read @${p.handle}'s feed (${res.error}). Check the handle, or you may be offline.` }));
+    stats.replaceChildren(el('p', { class: 'note', text: `Could not read ${profileLabel(p.handle)}'s feed (${res.error}). Check the handle, or you may be offline.` }));
   } else {
     const max = Math.max(1, ...s.tags.map((t) => t[1]));
     stats.replaceChildren(
@@ -448,7 +449,7 @@ function renderProfiles() {
       ondrop: (e) => { e.preventDefault(); li.classList.remove('dragover'); moveProfile(e.dataTransfer.getData('text/x-prof'), p.id); },
     },
     el('span', { class: 'glyph', text: p.glyph || '✶' }),
-    el('span', { class: 'who' }, el('div', { class: 'name', text: p.name }), el('div', { class: 'handle dim', text: p.handle ? '@' + p.handle : 'no handle' })),
+    el('span', { class: 'who' }, el('div', { class: 'name', text: p.name }), el('div', { class: 'handle dim', text: p.handle ? profileLabel(p.handle) : 'no handle' })),
     el('span', { class: 'dot' + (signed.get(p.id) ? ' on' : ''), title: signed.get(p.id) ? 'Signed in' : 'Not signed in' }));
     return li;
   }));
@@ -458,7 +459,7 @@ function renderAll() {
   renderProfiles();
   const p = active();
   $('#win-title').textContent = p ? `Mediumistic — ${p.name}` : 'Mediumistic';
-  $('#profile-badge').textContent = p ? `${p.glyph} ${p.handle ? '@' + p.handle : p.name}` : '';
+  $('#profile-badge').textContent = p ? `${p.glyph} ${p.handle ? profileLabel(p.handle) : p.name}` : '';
   for (const [id, rec] of webviews) rec.el.classList.toggle('shown', id === store.activeId);
   $('#no-profile').classList.toggle('hidden', !!(p && webviews.has(p.id)));
   syncAddress();

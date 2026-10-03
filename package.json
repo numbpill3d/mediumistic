@@ -4,6 +4,7 @@
   "description": "A 1-bit classic-Macintosh multi-account manager for Medium, with dithered three.js readings.",
   "main": "main.js",
   "scripts": {
+    "check": "node --check main.js && node --check preload.js && node --check src/app.js && node --check src/viz.js && node --test test/*.test.mjs && bash -n install.sh",
     "start": "electron43 --no-sandbox --ozone-platform-hint=auto ."
   },
   "dependencies": {
